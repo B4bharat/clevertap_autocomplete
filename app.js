@@ -31,9 +31,15 @@ let ufcFighters = [
   'Cain Valazquez',
   'Mark Hunt'
 ];
+let searchResults;
 
 function getSearchResults(searchTerm) {
   return ufcFighters.filter(function(fighter) {
     return fighter.match(new RegExp(searchTerm, 'i'));
   });
 }
+
+$('#search-box').keyup(function() {
+  let searchTerm = $(this).val();
+  searchResults = getSearchResults(searchTerm);
+});
