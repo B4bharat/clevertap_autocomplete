@@ -59,7 +59,7 @@ $('#search-box').keyup(function() {
   if(searchTerm) {
     searchResults = getSearchResults(searchTerm);
   }
-  console.log(searchResults);
+  
   if(searchTerm && searchResults.length) {
     let resultList = generateResultList(searchResults);
     showSearchResults(resultList);
