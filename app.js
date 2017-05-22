@@ -37,9 +37,23 @@ function getSearchResults(searchTerm) {
   });
 }
 
+function showSearchResults(resultList) {
+  $('.search-results ul').empty().append(resultList);
+}
+
+function generateResultList(searchResults) {
+  let resultList = '';
+  searchResults.forEach(function(result) {
+    resultList += '<li>'+result+'</li>';
+  });
+  return resultList;
+}
+
 $('#search-box').keyup(function() {
   let searchTerm = $(this).val();
   if(searchTerm) {
     let searchResults = getSearchResults(searchTerm);
+    let resultList = generateResultList(searchResults);
+    showSearchResults(resultList);
   }
 });
