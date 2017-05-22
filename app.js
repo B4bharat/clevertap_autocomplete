@@ -1,8 +1,3 @@
-/**
- * 3. on keypress, call a function that:
- *    3.2 attaches the result to the DOM
- * 4. DOM for listing the results
- */
 let ufcFighters = [
   'Conor McGregor',
   'Khabib Nurmagomedov',
@@ -49,11 +44,19 @@ function generateResultList(searchResults) {
   return resultList;
 }
 
+function showEmptyMessage() {
+  $('.search-results ul').empty().text('No Fighter found');
+}
+
 $('#search-box').keyup(function() {
   let searchTerm = $(this).val();
-  if(searchTerm) {
-    let searchResults = getSearchResults(searchTerm);
+  let searchResults = getSearchResults(searchTerm);
+
+  if(searchResults.length) {
     let resultList = generateResultList(searchResults);
     showSearchResults(resultList);
+  } else {
+    showEmptyMessage();
   }
+
 });
