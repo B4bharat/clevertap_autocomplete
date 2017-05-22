@@ -1,6 +1,5 @@
 /**
  * 3. on keypress, call a function that:
- *    3.1 searches through the text entered in the input box and creates an array of search results
  *    3.2 attaches the result to the DOM
  * 4. DOM for listing the results
  */
@@ -31,7 +30,6 @@ let ufcFighters = [
   'Cain Valazquez',
   'Mark Hunt'
 ];
-let searchResults;
 
 function getSearchResults(searchTerm) {
   return ufcFighters.filter(function(fighter) {
@@ -41,5 +39,7 @@ function getSearchResults(searchTerm) {
 
 $('#search-box').keyup(function() {
   let searchTerm = $(this).val();
-  searchResults = getSearchResults(searchTerm);
+  if(searchTerm) {
+    let searchResults = getSearchResults(searchTerm);
+  }
 });
