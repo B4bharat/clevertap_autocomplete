@@ -48,15 +48,25 @@ function showEmptyMessage() {
   $('.search-results ul').empty().text('No Fighter found');
 }
 
+function hideSearchResult() {
+  $('.search-results ul').empty();
+}
+
 $('#search-box').keyup(function() {
   let searchTerm = $(this).val();
-  let searchResults = getSearchResults(searchTerm);
+  let searchResults = [];
 
-  if(searchResults.length) {
+  if(searchTerm) {
+    searchResults = getSearchResults(searchTerm);
+  }
+  console.log(searchResults);
+  if(searchTerm && searchResults.length) {
     let resultList = generateResultList(searchResults);
     showSearchResults(resultList);
-  } else {
+  } else if(searchTerm && !searchResults.length) {
     showEmptyMessage();
+  } else {
+    hideSearchResult();
   }
 
 });
