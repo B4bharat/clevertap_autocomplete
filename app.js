@@ -32,6 +32,18 @@ let ufcFighters = [
   'Mark Hunt'
 ];
 
+let pluginName = 'autocomplete';
+let defaults = {
+  maxHeight: 200,
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: '#999',
+  bgColor: '#f5f5f5',
+  bgColorHover: '#b5afaf',
+  highlightColor: '#3399ff',
+  zIndex: 9999
+};
+
 function createResultArea(location) {
   $(location).after('<ul class="search-results"></ul>');
 }
@@ -67,12 +79,28 @@ function hideSearchResult() {
   $('.search-results').empty();
 }
 
-$.fn.autocomplete = function() {
+function Plugin( element, options ) {
+  this.element = element;
 
-  createResultArea(this);
+  // jQuery has an extend method that merges the contents of two or more objects, storing the result in the first object.
+  // The first object is generally empty because we don't want to alter the default options for future instances of the plugin
+  this.options = $.extend( {}, defaults, options) ;
+  
+  this._defaults = defaults;
+  this._name = pluginName;
+  
+  this.init();
+}
 
-  $(this).keyup(function() {
-    let searchTerm = $(this).val();
+Plugin.prototype.init = function () {
+  // Place initialization logic here
+  // You already have access to the DOM element and
+  // the options via the instance, e.g. this.element 
+  // and this.options
+  createResultArea(this.element);
+  
+  $(this.element).keyup(function() {
+    let searchTerm = this.value;
     let searchResults = [];
 
     if(searchTerm) {
@@ -88,7 +116,17 @@ $.fn.autocomplete = function() {
       hideSearchResult();
     }
 
-});
-
+  });
 };
+
+// A really lightweight plugin wrapper around the constructor, 
+// preventing against multiple instantiations
+$.fn[pluginName] = function ( options ) {
+  return this.each(function () {
+      if (!$.data(this, 'plugin_' + pluginName)) {
+          $.data(this, 'plugin_' + pluginName, 
+          new Plugin( this, options ));
+      }
+  });
+}
 }(jQuery, window, document));
