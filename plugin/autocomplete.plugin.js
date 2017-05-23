@@ -37,8 +37,18 @@
     });
   }
 
+  function getSearchResultsForObjectArr(lookupArray, lookupProperty, searchTerm) {
+    return lookupArray.filter(function(instance) {
+      return instance[lookupProperty].match(new RegExp(searchTerm, 'i'));
+    })
+    .map(function(instance) {
+      return instance[lookupProperty];
+    });
+  }
+
   function generateResultList(searchResults, searchTerm) {
     let resultList = '';
+
     searchResults.forEach(function(result) {
       function replacer(match) {
         return "<span class=\"highlight-searchterm\">"+match+"</span>";
@@ -47,6 +57,7 @@
 
       resultList += '<li>'+result+'</li>';
     });
+    
     return resultList;
   }
 
@@ -87,8 +98,10 @@
       let searchTerm = this.value;
       let searchResults = [];
 
-      if(searchTerm) {
+      if(searchTerm && !options.lookupProperty) {
         searchResults = getSearchResults(options.lookup, searchTerm);
+      } else {
+        searchResults = getSearchResultsForObjectArr(options.lookup, options.lookupProperty, searchTerm);
       }
       
       if(searchTerm && searchResults.length) {
