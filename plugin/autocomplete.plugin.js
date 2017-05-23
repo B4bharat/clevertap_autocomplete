@@ -10,8 +10,6 @@
     borderStyle: 'solid',
     borderColor: '#999',
     bgColor: '#f5f5f5',
-    bgColorHover: '#b5afaf',
-    highlightColor: '#3399ff',
     zIndex: 9999
   };
 
