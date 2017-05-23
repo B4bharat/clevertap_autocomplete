@@ -28,38 +28,38 @@ let ufcFighters = [
   'Mark Hunt'
 ];
 
+function getSearchResults(searchTerm) {
+  return ufcFighters.filter(function(fighter) {
+    return fighter.match(new RegExp(searchTerm, 'i'));
+  });
+}
+
+function generateResultList(searchResults, searchTerm) {
+  let resultList = '';
+  searchResults.forEach(function(result) {
+    function replacer(match) {
+      return "<span class=\"highlight-searchterm\">"+match+"</span>";
+    }
+    result = result.replace(new RegExp(searchTerm, 'gi'), replacer);
+
+    resultList += '<li>'+result+'</li>';
+  });
+  return resultList;
+}
+
+function showSearchResults(resultList) {
+  $('.search-results ul').empty().append(resultList);
+}
+
+function showEmptyMessage() {
+  $('.search-results ul').empty().text('No Fighter found');
+}
+
+function hideSearchResult() {
+  $('.search-results ul').empty();
+}
+
 $.fn.autocomplete = function() {
-
-  function getSearchResults(searchTerm) {
-    return ufcFighters.filter(function(fighter) {
-      return fighter.match(new RegExp(searchTerm, 'i'));
-    });
-  }
-
-  function generateResultList(searchResults, searchTerm) {
-    let resultList = '';
-    searchResults.forEach(function(result) {
-      function replacer(match) {
-        return "<span class=\"highlight-searchterm\">"+match+"</span>";
-      }
-      result = result.replace(new RegExp(searchTerm, 'gi'), replacer);
-
-      resultList += '<li>'+result+'</li>';
-    });
-    return resultList;
-  }
-
-  function showSearchResults(resultList) {
-    $('.search-results ul').empty().append(resultList);
-  }
-
-  function showEmptyMessage() {
-    $('.search-results ul').empty().text('No Fighter found');
-  }
-
-  function hideSearchResult() {
-    $('.search-results ul').empty();
-  }
 
   $(this).keyup(function() {
     let searchTerm = $(this).val();
@@ -81,4 +81,4 @@ $.fn.autocomplete = function() {
 });
 
 };
-})(jQuery);
+}(jQuery));
