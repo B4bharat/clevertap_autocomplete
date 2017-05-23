@@ -95,20 +95,23 @@
     let options = this.options;
     
     $(this.element).keyup(function() {
-      let searchTerm = this.value;
-      let searchResults = [];
 
-      if(searchTerm && !options.lookupProperty) {
-        searchResults = getSearchResults(options.lookup, searchTerm);
-      } else {
-        searchResults = getSearchResultsForObjectArr(options.lookup, options.lookupProperty, searchTerm);
-      }
-      
-      if(searchTerm && searchResults.length) {
-        let resultList = generateResultList(searchResults, searchTerm);
-        showSearchResults(resultList);
-      } else if(searchTerm && !searchResults.length) {
-        showEmptyMessage();
+      if(this.value) {
+        let searchTerm = this.value;
+        let searchResults = [];
+
+        if(options.lookupProperty) {
+          searchResults = getSearchResultsForObjectArr(options.lookup, options.lookupProperty, searchTerm);
+        } else {
+          searchResults = getSearchResults(options.lookup, searchTerm);
+        }
+
+        if(searchResults.length) {
+          let resultList = generateResultList(searchResults, searchTerm);
+          showSearchResults(resultList);
+        } else {
+          showEmptyMessage();
+        }
       } else {
         hideSearchResult();
       }
