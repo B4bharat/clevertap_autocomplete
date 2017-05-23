@@ -39,17 +39,11 @@ function showSearchResults(resultList) {
 function generateResultList(searchResults, searchTerm) {
   let resultList = '';
   searchResults.forEach(function(result) {
-    /**
-     * for every index, apply that slice and join thing
-     */
-    let regExp = new RegExp(searchTerm, 'gi');
-    let match;
-    let matches = [];
-
-    while ((match = regExp.exec(result)) !== null) {
-      matches.push(match.index);
+    function replacer(match) {
+      return "<span class=\"highlight-searchterm\">"+match+"</span>";
     }
-    
+    result = result.replace(new RegExp(searchTerm, 'gi'), replacer);
+
     resultList += '<li>'+result+'</li>';
   });
   return resultList;

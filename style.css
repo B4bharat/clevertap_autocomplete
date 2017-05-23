@@ -46,3 +46,7 @@
 .search-results > ul > li:hover {
   background: #b5afaf;
 }
+
+.highlight-searchterm {
+  color: #3399ff;
+}
