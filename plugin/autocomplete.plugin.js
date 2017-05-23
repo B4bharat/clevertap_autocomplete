@@ -94,7 +94,7 @@
     
     $(this.element).keyup(function() {
 
-      if(this.value) {
+      if(this.value && options.lookup) {
         let searchTerm = this.value;
         let searchResults = [];
 
