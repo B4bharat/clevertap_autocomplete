@@ -1,3 +1,5 @@
+(function($) {
+
 let ufcFighters = [
   'Conor McGregor',
   'Khabib Nurmagomedov',
@@ -26,52 +28,57 @@ let ufcFighters = [
   'Mark Hunt'
 ];
 
-function getSearchResults(searchTerm) {
-  return ufcFighters.filter(function(fighter) {
-    return fighter.match(new RegExp(searchTerm, 'i'));
-  });
-}
+$.fn.autocomplete = function() {
 
-function generateResultList(searchResults, searchTerm) {
-  let resultList = '';
-  searchResults.forEach(function(result) {
-    function replacer(match) {
-      return "<span class=\"highlight-searchterm\">"+match+"</span>";
+  function getSearchResults(searchTerm) {
+    return ufcFighters.filter(function(fighter) {
+      return fighter.match(new RegExp(searchTerm, 'i'));
+    });
+  }
+
+  function generateResultList(searchResults, searchTerm) {
+    let resultList = '';
+    searchResults.forEach(function(result) {
+      function replacer(match) {
+        return "<span class=\"highlight-searchterm\">"+match+"</span>";
+      }
+      result = result.replace(new RegExp(searchTerm, 'gi'), replacer);
+
+      resultList += '<li>'+result+'</li>';
+    });
+    return resultList;
+  }
+
+  function showSearchResults(resultList) {
+    $('.search-results ul').empty().append(resultList);
+  }
+
+  function showEmptyMessage() {
+    $('.search-results ul').empty().text('No Fighter found');
+  }
+
+  function hideSearchResult() {
+    $('.search-results ul').empty();
+  }
+
+  $(this).keyup(function() {
+    let searchTerm = $(this).val();
+    let searchResults = [];
+
+    if(searchTerm) {
+      searchResults = getSearchResults(searchTerm);
     }
-    result = result.replace(new RegExp(searchTerm, 'gi'), replacer);
-
-    resultList += '<li>'+result+'</li>';
-  });
-  return resultList;
-}
-
-function showSearchResults(resultList) {
-  $('.search-results ul').empty().append(resultList);
-}
-
-function showEmptyMessage() {
-  $('.search-results ul').empty().text('No Fighter found');
-}
-
-function hideSearchResult() {
-  $('.search-results ul').empty();
-}
-
-$('#search-box').keyup(function() {
-  let searchTerm = $(this).val();
-  let searchResults = [];
-
-  if(searchTerm) {
-    searchResults = getSearchResults(searchTerm);
-  }
-  
-  if(searchTerm && searchResults.length) {
-    let resultList = generateResultList(searchResults, searchTerm);
-    showSearchResults(resultList);
-  } else if(searchTerm && !searchResults.length) {
-    showEmptyMessage();
-  } else {
-    hideSearchResult();
-  }
+    
+    if(searchTerm && searchResults.length) {
+      let resultList = generateResultList(searchResults, searchTerm);
+      showSearchResults(resultList);
+    } else if(searchTerm && !searchResults.length) {
+      showEmptyMessage();
+    } else {
+      hideSearchResult();
+    }
 
 });
+
+};
+})(jQuery);
