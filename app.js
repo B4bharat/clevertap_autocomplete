@@ -32,10 +32,6 @@ function getSearchResults(searchTerm) {
   });
 }
 
-function showSearchResults(resultList) {
-  $('.search-results ul').empty().append(resultList);
-}
-
 function generateResultList(searchResults, searchTerm) {
   let resultList = '';
   searchResults.forEach(function(result) {
@@ -47,6 +43,10 @@ function generateResultList(searchResults, searchTerm) {
     resultList += '<li>'+result+'</li>';
   });
   return resultList;
+}
+
+function showSearchResults(resultList) {
+  $('.search-results ul').empty().append(resultList);
 }
 
 function showEmptyMessage() {
