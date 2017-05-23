@@ -32,30 +32,6 @@ let ufcFighters = [
   'Mark Hunt'
 ];
 
-/** OPTIONS
- *  .search-results > ul {
-      max-height: 200px;
-      border: 1px solid #999;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      list-style-type: none;
-      overflow: auto;
-    }
-
-    .search-results > ul > li {
-      padding: 10px 0;
-      cursor: pointer;
-    }
-
-    .search-results > ul > li:hover {
-      background: #b5afaf;
-    }
-
-    .highlight-searchterm {
-      color: #3399ff;
-    }
- */
 function createResultArea(location) {
   $(location).after('<ul class="search-results"></ul>');
 }
