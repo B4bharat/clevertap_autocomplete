@@ -3,35 +3,6 @@
 // that are not closed properly.
 ;(function($, window, document, undefined) {
 
-  //Dummy array of strings containing names of UFC Fighters
-  let ufcFighters = [
-    'Conor McGregor',
-    'Khabib Nurmagomedov',
-    'Tony Ferguson',
-    'Eddie Alvarez',
-    'Nate Diaz',
-    'Nick Diaz',
-    'Michael Bisping',
-    'Goerges St-Pierre',
-    'Yoel Romero',
-    'Robert Whittakar',
-    'Gegard Mussasi',
-    'Luke Rockhold',
-    'Chris Weidman',
-    'Jacare Souza',
-    'Kelvin Gastelum',
-    'Anderson Silva',
-    'Daniel Cormier',
-    'Jon Jones',
-    'Alexender Gustaffson',
-    'Jimmi Manuwa',
-    'Stipe Miocic',
-    'Junior Dos Santos',
-    'Fabricio Werdum',
-    'Cain Valazquez',
-    'Mark Hunt'
-  ];
-
   let pluginName = 'autocomplete';
   let defaults = {
     maxHeight: 200,
@@ -47,6 +18,8 @@
   function createResultArea(location, options) {
 
     $(location).after('<ul class="search-results"></ul>');
+
+    //Styling the search result area
     $('.search-results').css({
       'max-height': options.maxHeight+'px',
       'border-width': options.borderWidth,
@@ -55,12 +28,12 @@
       'background-color': options.bgColor,
       'z-index': options.zIndex
     });
-    
+
   }
 
-  function getSearchResults(searchTerm) {
-    return ufcFighters.filter(function(fighter) {
-      return fighter.match(new RegExp(searchTerm, 'i'));
+  function getSearchResults(lookupArray, searchTerm) {
+    return lookupArray.filter(function(instance) {
+      return instance.match(new RegExp(searchTerm, 'i'));
     });
   }
 
@@ -108,13 +81,14 @@
     // the options via the instance, e.g. this.element 
     // and this.options
     createResultArea(this.element, this.options);
+    let options = this.options;
     
     $(this.element).keyup(function() {
       let searchTerm = this.value;
       let searchResults = [];
 
       if(searchTerm) {
-        searchResults = getSearchResults(searchTerm);
+        searchResults = getSearchResults(options.lookup, searchTerm);
       }
       
       if(searchTerm && searchResults.length) {
