@@ -38,6 +38,10 @@
 }
 
 .search-results > ul > li {
-  margin: 10px 0;
+  padding: 10px 0;
   cursor: pointer;
+}
+
+.search-results > ul > li:nth-child(odd) {
+  background: #b5afaf;
 }
