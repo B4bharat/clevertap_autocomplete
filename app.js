@@ -56,6 +56,9 @@ let ufcFighters = [
       color: #3399ff;
     }
  */
+function createResultArea(location) {
+  $(location).after('<ul class="search-results"></ul>');
+}
 
 function getSearchResults(searchTerm) {
   return ufcFighters.filter(function(fighter) {
@@ -77,18 +80,20 @@ function generateResultList(searchResults, searchTerm) {
 }
 
 function showSearchResults(resultList) {
-  $('.search-results ul').empty().append(resultList);
+  $('.search-results').empty().append(resultList);
 }
 
 function showEmptyMessage() {
-  $('.search-results ul').empty().text('No Fighter found');
+  $('.search-results').empty().text('No Fighter found');
 }
 
 function hideSearchResult() {
-  $('.search-results ul').empty();
+  $('.search-results').empty();
 }
 
 $.fn.autocomplete = function() {
+
+  createResultArea(this);
 
   $(this).keyup(function() {
     let searchTerm = $(this).val();
