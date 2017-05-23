@@ -36,9 +36,20 @@ function showSearchResults(resultList) {
   $('.search-results ul').empty().append(resultList);
 }
 
-function generateResultList(searchResults) {
+function generateResultList(searchResults, searchTerm) {
   let resultList = '';
   searchResults.forEach(function(result) {
+    /**
+     * for every index, apply that slice and join thing
+     */
+    let regExp = new RegExp(searchTerm, 'gi');
+    let match;
+    let matches = [];
+
+    while ((match = regExp.exec(result)) !== null) {
+      matches.push(match.index);
+    }
+    
     resultList += '<li>'+result+'</li>';
   });
   return resultList;
@@ -61,7 +72,7 @@ $('#search-box').keyup(function() {
   }
   
   if(searchTerm && searchResults.length) {
-    let resultList = generateResultList(searchResults);
+    let resultList = generateResultList(searchResults, searchTerm);
     showSearchResults(resultList);
   } else if(searchTerm && !searchResults.length) {
     showEmptyMessage();
