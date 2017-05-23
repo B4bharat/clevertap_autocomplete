@@ -44,8 +44,18 @@
     zIndex: 9999
   };
 
-  function createResultArea(location) {
+  function createResultArea(location, options) {
+
     $(location).after('<ul class="search-results"></ul>');
+    $('.search-results').css({
+      'max-height': options.maxHeight+'px',
+      'border-width': options.borderWidth,
+      'border-style': options.borderStyle,
+      'border-color': options.borderColor,
+      'background-color': options.bgColor,
+      'z-index': options.zIndex
+    });
+    
   }
 
   function getSearchResults(searchTerm) {
@@ -97,7 +107,7 @@
     // You already have access to the DOM element and
     // the options via the instance, e.g. this.element 
     // and this.options
-    createResultArea(this.element);
+    createResultArea(this.element, this.options);
     
     $(this.element).keyup(function() {
       let searchTerm = this.value;
